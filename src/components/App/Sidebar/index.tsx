@@ -1,10 +1,32 @@
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+
 import { Link, useRouteMatch } from "react-router-dom";
+import { Profile } from '../../../store/modules/user/profile/types';
+import * as ProfileActions from '../../../store/modules/user/profile/actions';
+
 import { AppMenu, AppMenuItem, AppMenuItems, Container, UserContent } from "./styles";
+import { ApplicationState } from '../../../store';
+import { useEffect } from 'react';
+import { getThumbnail } from '../../../utils/thumbnails';
+import UserContentShimmer from '../Shimmer/UserContentShimmer';
 
 
-const Sidebar: React.FC = () => {
+interface StateProps {
+    profile: Profile;
+    loading: boolean;
+}
 
-    const { path } = useRouteMatch()
+interface DispatchProps {
+    getProfileHDispatch(): void
+}
+  
+type Props = StateProps & DispatchProps
+  
+
+const Sidebar: React.FC<Props> = ({ loading, profile, getProfileHDispatch }) => {
+
+    const { path } = useRouteMatch();
 
     const MenuItems = [
         {"title": "Dashboard", "icon": "fas fa-th-large", "route": "/dashboard"},
@@ -14,17 +36,31 @@ const Sidebar: React.FC = () => {
         {"title": "News", "icon": "fas fa-newspaper", "route": "/"},
     ];
 
+    useEffect(() => {
+        getProfileHDispatch();
+    }, []);
+
+    useEffect(() => {
+        console.log(profile);
+    }, [profile]);
+
     return <Container> 
         <UserContent>
-            <div className="user-image">
-                <img src="https://static.cdnpub.info/files/storage/public/5e/d5/504b6ea338b4a7j3c5.jpeg" alt="User" />
-                <span></span>
-            </div>
-            <div className="user-block">
-                <p>Pedro Rodrigues</p>
-                <span>@preduus</span>
-            </div>
-            <div className="user-controls"></div>
+            {loading ? (
+                <UserContentShimmer />
+            ) : (
+                <>
+                    <div className="user-image">
+                        <img src={profile.thumbnail} alt="User" />
+                        <span></span>
+                    </div>
+                    <div className="user-block">
+                        <p>{profile.name || ""}</p>
+                        <span>{profile.email || ""}</span>
+                    </div>
+                    <div className="user-controls"></div>
+                </>
+            )}
         </UserContent>
         <AppMenu>
             <AppMenuItems>
@@ -38,4 +74,12 @@ const Sidebar: React.FC = () => {
     </Container>
 }
 
-export default Sidebar;
+const mapStateToProps = (state: ApplicationState) => {
+    const data = state.profile.data;
+
+    return { loading: state.profile.loading, profile: {...data, thumbnail: getThumbnail(data.avatar)}}
+};
+  
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(ProfileActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

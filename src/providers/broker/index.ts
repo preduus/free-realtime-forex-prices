@@ -11,6 +11,10 @@ class BrokerProvider {
         return await this.broker.authenticate(credentails);
     }
 
+    getProfile() {
+        return this.broker.getProfile();
+    }
+
 }
 
 export default new BrokerProvider(new IqoptionProvider());
