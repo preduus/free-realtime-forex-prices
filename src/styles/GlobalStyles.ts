@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
         outline: 0;
     }
 
+    body, html {
+        height: 100%;
+    }
+
     body {
         font-family: 'Roboto', sans-serif;
         font-size: 16px;
@@ -33,6 +37,19 @@ const GlobalStyle = createGlobalStyle`
         border-radius: 7px;
     }
 
+    button:hover {
+        cursor: pointer;
+        opacity: 0.9;
+    }
+
+    #application {
+        height: 100%;
+    }
+
+    .error {
+        color: var(--danger);
+    }
+
     :root {
         --primary: #1A1B1D;
         --secondary: #141416;
@@ -45,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
         --danger: #FF4C00;
 
         --grey-primary: #2D2F32;
-        --text-secondary: #707277
+        --gray-secondary: #707277;
         --grey-tertiary: #B7B7B7;
 
         --active: #4422EF;
