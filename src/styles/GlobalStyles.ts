@@ -7,6 +7,14 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    ul, li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
     button, input {
         border: 0;
         outline: 0;
