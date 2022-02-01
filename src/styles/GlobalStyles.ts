@@ -11,6 +11,10 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
 
+    a {
+        text-decoration: none;
+    }
+
     button, input {
         border: 0;
         outline: 0;
