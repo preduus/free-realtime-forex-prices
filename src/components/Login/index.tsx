@@ -1,5 +1,6 @@
 import { Formik, Form, FormikHelpers } from 'formik';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as Yup from "yup";
 
 import BrokerProvider from '../../providers/broker';
@@ -19,6 +20,7 @@ const Schema = Yup.object().shape({
 
 const LoginPage: React.FC = () => {
 
+    const history = useHistory();
     const initialValues: IValues = {identifier: "", password: ""};
     const [handleException, setHandleException] = useState<string | null>(null);
 
@@ -29,6 +31,7 @@ const LoginPage: React.FC = () => {
 
         if (code === "success") {
             setCookie("token", token || "");
+            history.push("/login");
         } else {
             console.error(message);
             setHandleException(`${code}: Verify your credentials and try again.`);
