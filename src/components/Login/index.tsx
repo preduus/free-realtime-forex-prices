@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import BrokerProvider from '../../providers/broker';
 import { setCookie } from '../../utils/cookies';
+import Preloader from '../Preloader';
 
 import { Container, LoginFormContainer, FormGroup, FormSubmitButton } from './styles';
 
@@ -24,6 +25,7 @@ const LoginPage: React.FC = () => {
 
     const handleSubmitForm = async (values: IValues, { setSubmitting }: FormikHelpers<IValues>) => {
         setSubmitting(true);
+        setHandleException(null);
         const { code, token, message } = await BrokerProvider.getToken(values);
         setSubmitting(false);
 
@@ -39,11 +41,12 @@ const LoginPage: React.FC = () => {
     return <Container>
         <LoginFormContainer>
             <Formik initialValues={initialValues} onSubmit={handleSubmitForm} validationSchema={Schema}>
-                {({values, errors, handleBlur, handleChange}) => {
+                {({values, errors, isSubmitting, handleBlur, handleChange}) => {
                     return <Form>
                         {handleException && <p className="error">
                             {handleException}
                             </p>}
+                        {isSubmitting && <Preloader />}
                         <FormGroup>
                             <label>Email</label>
                             <input
