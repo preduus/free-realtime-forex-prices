@@ -33,6 +33,7 @@ const LoginPage: React.FC = () => {
 
         if (code === "success") {
             setCookie("token", token || "");
+            setCookie("ssid", token || "");
             history.push("/login");
         } else {
             console.error(message);
