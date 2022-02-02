@@ -1,81 +1,70 @@
-import { useState } from "react";
-import { Container, PageHeader, Contents } from "./styles"
-import { Table, TableHeader, TableHeaderItem, TableBody, TableRow, TableColumn } from "./table";
+import { useEffect, useState } from "react";
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
+import { ApplicationState } from "../../../../store";
+import { Actives } from "../../../../store/modules/broker/actives/types";
+import * as ActivesActions from '../../../../store/modules/broker/actives/actions';
 
-interface IExchargeActives {
-    token: string;
-    price: number;
-    open: number;
-    close: number;
-    high: number;
-    low: number;
-    variation: {
-        to: string;
-        value: number;
-    };
+import { Container, PageHeader, RefreshButton, Contents } from "./styles"
+import { Table, TableHeader, TableHeaderItem, TableBody, TableRow, TableColumn, ActiveIcon } from "./table";
+import Preloader from "../../../Preloader";
+
+interface StateProps {
+    actives: Actives[];
+    loading: boolean;
 }
 
-const DashboardPage: React.FC = () => {
+interface DispatchProps {
+    getActivesDispatch(): void
+}
+  
+type Props = StateProps & DispatchProps
 
-    const [exchargeActives] = useState<IExchargeActives[]>([
-        {
-            token: "EUR/USD", 
-            price: 3.131241, 
-            open: 3.131241, 
-            close: 3.131241, 
-            high: 3.131241, 
-            low: 3.131241, 
-            variation: {
-                to: "up",
-                value: 15.5
-            }
-        },
-        {
-            token: "EUR/JPY", 
-            price: 3.131241, 
-            open: 3.131241, 
-            close: 3.131241, 
-            high: 3.131241, 
-            low: 3.131241, 
-            variation: {
-                to: "down",
-                value: 8.5
-            }
-        }
-    ]);
+const DashboardPage: React.FC<Props> = ({loading, actives, getActivesDispatch}) => {
+
+    useEffect(() => {
+        getActivesDispatch();
+    }, []);
+
+    useEffect(() => {
+        console.log(actives);
+    }, [actives])
 
     return <Container>
+        {loading && <Preloader />}
         <PageHeader>
             <div className="page-title">
                 <h1>Dashboard</h1>
+            </div>
+            <div className="page-actions">
+                <RefreshButton type="button" className="" onClick={getActivesDispatch}>Refresh</RefreshButton>
             </div>
         </PageHeader>
         <Contents>
             <Table cellSpacing={0} cellPadding={0}>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderItem>Token</TableHeaderItem>
+                        <TableHeaderItem>Active name</TableHeaderItem>
                         <TableHeaderItem>Price</TableHeaderItem>
-                        <TableHeaderItem>Open</TableHeaderItem>
-                        <TableHeaderItem>Close</TableHeaderItem>
-                        <TableHeaderItem>High</TableHeaderItem>
-                        <TableHeaderItem>Low</TableHeaderItem>
+                        <TableHeaderItem>Bid</TableHeaderItem>
+                        <TableHeaderItem>Ask</TableHeaderItem>
                         <TableHeaderItem>Variation</TableHeaderItem>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     <>
-                        {exchargeActives.map((active, i) => {
+                        {actives.map((active, i) => {
                             return <TableRow key={i}>
-                                <TableColumn>{active.token}</TableColumn>
+                                <TableColumn className="with-icon">
+                                    <ActiveIcon src={`https://static.cdnroute.io/files${active.media.logo}`} alt={active.name} />
+                                    {active.name}
+                                </TableColumn>
                                 <TableColumn>{active.price}</TableColumn>
-                                <TableColumn>{active.open}</TableColumn>
-                                <TableColumn>{active.close}</TableColumn>
-                                <TableColumn>{active.high}</TableColumn>
-                                <TableColumn>{active.low}</TableColumn>
+                                <TableColumn>{active.quotation.bid}</TableColumn>
+                                <TableColumn>{active.quotation.ask}</TableColumn>
                                 <TableColumn>
-                                    <span className={active.variation.to}>{active.variation.value}%</span>
+                                    <span className={(parseFloat(active.charts.d1.change) < 0) ? "down" : "up"}>{parseFloat(active.charts.d1.change).toFixed(2)}%</span>
                                 </TableColumn>
                             </TableRow>
                         })}
@@ -86,4 +75,12 @@ const DashboardPage: React.FC = () => {
     </Container>;
 }
 
-export default DashboardPage;
+const mapStateToProps = (state: ApplicationState) => {
+    const data = state.actives.data;
+
+    return { loading: state.actives.loading, actives: data}
+};
+  
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(ActivesActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

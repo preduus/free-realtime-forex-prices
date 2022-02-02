@@ -16,11 +16,23 @@ export const PageHeader = styled.div`
     
     align-items: center;
 
+    justify-content: space-between;
+
     padding: 25px;
     border-bottom: 1px solid var(--tertiary);
 
     .page-title {
 
+    }
+`;
+
+
+export const RefreshButton = styled.button`
+    background-color: var(--gray-secondary);
+    color: var(--white);
+
+    &:hover {
+        background-color: var(--active);
     }
 `;
 

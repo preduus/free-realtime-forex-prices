@@ -44,10 +44,6 @@ export const Table = styled.table`
             .down {
                 color: var(--danger);
                 font-weight: bold;
-
-                &::before {
-                    content: "-";
-                }
             }
         }
 
@@ -64,7 +60,14 @@ export const TableHeader = ({ children }: {children: ReactElement}) => {
 }
 
 export const TableRow = styled.tr`
+    td.with-icon {
+        display: flex;
+        align-items: center;
 
+        img {
+            margin-right: 5px;
+        }
+    }
 `;
 
 export const TableColumn = styled.td`
@@ -80,3 +83,8 @@ export const TableBody = ({ children }: {children: ReactElement}) => {
         {children}
     </tbody>
 }
+
+export const ActiveIcon = styled.img`
+    width: 20px;
+    height: 20px;
+`;
