@@ -33,6 +33,22 @@ export interface Actives {
     ticker: string;
     type: string;
     __typename: string;
+    current?: {
+        active_id: number;
+        ask: number;
+        at: number;
+        bid: number;
+        close: number;
+        from: number;
+        id: number;
+        max: number;
+        min: number;
+        open: number;
+        phase: string;
+        size: number;
+        to: number;
+        volume: number;
+    }
 }
 
 export interface ActivesState {
