@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { IBroker, IBrokerAuthenticateDTO, IBrokerCredentials, IBrokerProfileDTO } from '../IBrokers';
 
 import api from '../../api';

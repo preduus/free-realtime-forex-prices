@@ -1,5 +1,4 @@
-import { createContext, ReactElement, useEffect, useState } from "react";
-import api from "../providers/api";
+import { createContext, ReactElement, useState } from "react";
 import { Actives } from "../store/modules/broker/actives/types";
 
 
