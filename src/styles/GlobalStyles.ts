@@ -7,6 +7,14 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    ul, li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
     button, input {
         border: 0;
         outline: 0;
@@ -48,6 +56,32 @@ const GlobalStyle = createGlobalStyle`
 
     .error {
         color: var(--danger);
+    }
+
+    .shimmer {
+        animation : shimmer 2s infinite;
+        background: linear-gradient(to right, var(--tertiary) 4%, #3b3e48 25%, var(--tertiary) 36%);
+        background-size: 1000px 100%;
+    }
+
+    .shimmer-wrapper {
+        width: 0px;
+        animation: fullView 0.5s forwards linear;
+    }
+
+    @keyframes fullView {
+        100% {
+            width: 100%;
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
     }
 
     :root {
