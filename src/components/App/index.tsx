@@ -5,6 +5,8 @@ import { Container, Contents } from "./styles";
 import Sidebar from "./Sidebar";
 
 import DashboardPage from "./Pages/Dashboard";
+import MarketPage from "./Pages/Market";
+import { MarketProvider } from "../../contexts/market";
 
 const AppPage: React.FC = () => {
 
@@ -18,6 +20,11 @@ const AppPage: React.FC = () => {
                     <Redirect to={`${path}/dashboard`} />
                 </Route>
                 <Route path={`${path}/dashboard`} component={DashboardPage} />
+                <Route path={`${path}/market`}>
+                    <MarketProvider>
+                        <MarketPage />
+                    </MarketProvider>
+                </Route>
             </Switch>
         </Contents>
     </Container>
