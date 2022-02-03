@@ -28,7 +28,11 @@ const DashboardPage: React.FC<Props> = ({loading, actives, getActivesDispatch}) 
 
     useEffect(() => {
         getActivesDispatch();
+<<<<<<< HEAD
     }, [getActivesDispatch]);
+=======
+    }, []);
+>>>>>>> feature/create-project-readme
 
     return <Container>
         {loading && <Preloader />}

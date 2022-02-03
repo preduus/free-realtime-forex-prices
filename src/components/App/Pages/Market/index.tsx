@@ -54,11 +54,19 @@ const MarketPage: React.FC<Props> = ({loading, actives, getActivesDispatch}) => 
 
     useEffect(() => {
         getActivesDispatch();
+<<<<<<< HEAD
     }, [getActivesDispatch])
 
     useEffect(() => {
         handleActives(actives);
     }, [actives, handleActives]);
+=======
+    }, [])
+
+    useEffect(() => {
+        handleActives(actives);
+    }, [actives]);
+>>>>>>> feature/create-project-readme
 
     const handleLastPrice = (prices: IMarketPrices) => {
         if (prices) {
