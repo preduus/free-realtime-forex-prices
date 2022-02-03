@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
@@ -28,7 +28,7 @@ const DashboardPage: React.FC<Props> = ({loading, actives, getActivesDispatch}) 
 
     useEffect(() => {
         getActivesDispatch();
-    }, []);
+    }, [getActivesDispatch]);
 
     return <Container>
         {loading && <Preloader />}
