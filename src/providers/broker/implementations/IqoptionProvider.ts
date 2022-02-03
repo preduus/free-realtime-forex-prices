@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { IBroker, IBrokerAuthenticateDTO, IBrokerCredentials, IBrokerProfileDTO } from '../IBrokers';
 
+import api from '../../api';
+
 interface IAuthenticateBrokerResponse {
     code: string;
     ssid?: string;
@@ -13,7 +15,7 @@ class IqoptionProvider implements IBroker {
         const { identifier, password } = credentials;
 
         return new Promise(resolve => {
-            axios.post("get-user-auth", { identifier, password }).then(response => {
+            api.post("get-user-auth", { identifier, password }).then(response => {
                 const data: IAuthenticateBrokerResponse = response.data;
 
                 if (data.code !== "success") {
@@ -35,7 +37,7 @@ class IqoptionProvider implements IBroker {
 
     async getProfile(): Promise<IBrokerProfileDTO> {
         return new Promise(resolve => {
-            axios.get("broker-api/getprofile").then(response => resolve(response.data))
+            api.get("broker-api/getprofile").then(response => resolve(response.data))
         })
     }
 
