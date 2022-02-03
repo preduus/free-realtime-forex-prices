@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
@@ -54,11 +54,11 @@ const MarketPage: React.FC<Props> = ({loading, actives, getActivesDispatch}) => 
 
     useEffect(() => {
         getActivesDispatch();
-    }, [])
+    }, [getActivesDispatch])
 
     useEffect(() => {
         handleActives(actives);
-    }, [actives]);
+    }, [actives, handleActives]);
 
     const handleLastPrice = (prices: IMarketPrices) => {
         if (prices) {
