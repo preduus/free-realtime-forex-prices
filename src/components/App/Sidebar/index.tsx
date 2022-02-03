@@ -30,7 +30,7 @@ const Sidebar: React.FC<Props> = ({ loading, profile, getProfileHDispatch }) => 
 
     const MenuItems = [
         {"title": "Dashboard", "icon": "fas fa-th-large", "route": "/dashboard"},
-        {"title": "Market", "icon": "fas fa-shopping-bag", "route": "/"},
+        {"title": "Market", "icon": "fas fa-shopping-bag", "route": "/market"},
         {"title": "Transactions", "icon": "fas fa-exchange-alt", "route": "/"},
         {"title": "Portfolio", "icon": "fas fa-briefcase", "route": "/"},
         {"title": "News", "icon": "fas fa-newspaper", "route": "/"},
@@ -39,10 +39,6 @@ const Sidebar: React.FC<Props> = ({ loading, profile, getProfileHDispatch }) => 
     useEffect(() => {
         getProfileHDispatch();
     }, []);
-
-    useEffect(() => {
-        console.log(profile);
-    }, [profile]);
 
     return <Container> 
         <UserContent>
