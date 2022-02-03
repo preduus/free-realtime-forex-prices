@@ -7,7 +7,7 @@ class API {
         return axios.post(endpoint, data, { headers });
     }
 
-    get(endpoint: string, params: {}, headers: {}) {
+    get(endpoint: string, params = {}, headers = {}) {
         return axios.get(endpoint, { params, headers });
     }
 
