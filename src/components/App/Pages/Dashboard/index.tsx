@@ -6,8 +6,11 @@ import { ApplicationState } from "../../../../store";
 import { Actives } from "../../../../store/modules/broker/actives/types";
 import * as ActivesActions from '../../../../store/modules/broker/actives/actions';
 
-import { Container, PageHeader, RefreshButton, Contents } from "./styles"
 import { Table, TableHeader, TableHeaderItem, TableBody, TableRow, TableColumn, ActiveIcon } from "./table";
+import { Container, PageHeader, Contents } from '../styles';
+
+import { RefreshButton } from "./styles"
+
 import Preloader from "../../../Preloader";
 
 interface StateProps {
@@ -26,10 +29,6 @@ const DashboardPage: React.FC<Props> = ({loading, actives, getActivesDispatch}) 
     useEffect(() => {
         getActivesDispatch();
     }, []);
-
-    useEffect(() => {
-        console.log(actives);
-    }, [actives])
 
     return <Container>
         {loading && <Preloader />}
