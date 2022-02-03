@@ -7,6 +7,12 @@ module.exports = function(app) {
         pathRewrite: { '^/get-user-auth': '' } 
     }));
     
+    app.use(createProxyMiddleware("/check-user-session", { 
+        target: "https://auth.iqoption.com/api/v4/check-session", 
+        changeOrigin: true, 
+        pathRewrite: { '^/check-user-session': '' } 
+    }));
+    
     app.use(createProxyMiddleware("/fininfo", { 
         target: "https://fininfo.iqoption.com/api/graphql", 
         changeOrigin: true, 
@@ -23,5 +29,12 @@ module.exports = function(app) {
         target: "https://iqoption.com/api", 
         changeOrigin: true, 
         pathRewrite: { '^/broker-api': '' } 
+    }));
+
+    app.use(createProxyMiddleware("/realtime", { 
+        target: "wss://ws.iqoption.com/echo/websocket",
+        ws: true,
+        changeOrigin: true, 
+        pathRewrite: { '^/realtime': '' } 
     }));
 };
